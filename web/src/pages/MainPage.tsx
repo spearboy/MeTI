@@ -2,7 +2,6 @@ import {
   Avatar,
   Box,
   Button,
-  Grid,
   IconButton,
   List,
   ListItem,
@@ -34,7 +33,6 @@ export const MainPage = () => {
   const [loading, setLoading] = useState(true)
   const [matchItems, setMatchItems] = useState<MatchListItem[]>([])
   const [friends, setFriends] = useState<FriendWithProfile[]>([])
-  const [requests, setRequests] = useState<FriendRequest[]>([])
 
   const [activeFriend, setActiveFriend] = useState<FriendWithProfile | null>(null)
   const [messages, setMessages] = useState<FriendMessage[]>([])
@@ -88,7 +86,6 @@ export const MainPage = () => {
         .select('*')
         .or(`from_user_id.eq.${myId},to_user_id.eq.${myId}`)
       const reqs = (requestRows ?? []) as FriendRequest[]
-      setRequests(reqs)
 
       // 친구 목록 가공
       const friendItems: FriendWithProfile[] = typedFriends
@@ -232,8 +229,14 @@ export const MainPage = () => {
   }
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} md={6}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: { xs: 'column', md: 'row' },
+        gap: 2,
+      }}
+    >
+      <Box sx={{ flex: 1 }}>
         <Paper sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column', gap: 1 }}>
           <Typography variant="h6" fontWeight={600}>
             매칭 목록
@@ -276,8 +279,8 @@ export const MainPage = () => {
             ))}
           </List>
         </Paper>
-      </Grid>
-      <Grid item xs={12} md={6}>
+      </Box>
+      <Box sx={{ flex: 1 }}>
         <Paper sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column', gap: 1 }}>
           <Typography variant="h6" fontWeight={600}>
             친구 목록
@@ -381,8 +384,8 @@ export const MainPage = () => {
             </Box>
           )}
         </Paper>
-      </Grid>
-    </Grid>
+      </Box>
+    </Box>
   )
 }
 

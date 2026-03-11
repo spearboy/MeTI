@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { AppBar, Avatar, Box, IconButton, Toolbar, Typography } from '@mui/material'
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt'
 import FavoriteIcon from '@mui/icons-material/Favorite'
