@@ -75,11 +75,14 @@ export const MainPage = () => {
       )
 
       const allProfileIds = Array.from(new Set([...friendIds, ...opponentIds]))
-      const { data: profileRows } = await supabase
-        .from('profiles')
-        .select('*')
-        .in('id', allProfileIds.length ? allProfileIds : ['dummy'])
-      const profiles = (profileRows ?? []) as Profile[]
+      let profiles: Profile[] = []
+      if (allProfileIds.length > 0) {
+        const { data: profileRows } = await supabase
+          .from('profiles')
+          .select('*')
+          .in('id', allProfileIds)
+        profiles = (profileRows ?? []) as Profile[]
+      }
 
       const { data: requestRows } = await supabase
         .from('friend_requests')
