@@ -195,6 +195,18 @@ export const MatchPage = () => {
       mbti_preference: mbti,
     })
     setState('waiting')
+
+    // 서버에서 바로 매칭 시도 (상대가 이미 대기 중이면 곧바로 매칭)
+    const { data, error } = await supabase.rpc('try_match')
+    if (error) {
+      // eslint-disable-next-line no-console
+      console.error('try_match error', error)
+      return
+    }
+    if (data?.ok && data.match_id) {
+      // matches 테이블 Realtime 구독이 이미 있으므로
+      // 별도 처리 없이도 active 상태가 반영된다.
+    }
   }
 
   const handleCancel = async () => {
